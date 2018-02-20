@@ -46,7 +46,17 @@
     "impliedStrict": true
   },
   "parserOptions": {
-    "sourceType": "module"
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "module": true,
+      "jsx": true
+    }
   },
   "extends": "eslint:recommended"
 }
