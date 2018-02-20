@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: 'wecome to my cowsay, you... cowsay moo, you say too, boo?',
+      content: 'welcome to the cowsay, you... cowsay moo you say too, boo?',
     };
 
     this.handleClick = this.handleClick.bind(this);
