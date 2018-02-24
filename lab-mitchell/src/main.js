@@ -4,32 +4,50 @@ import './styles/main.scss';
 
 import React from 'react';
 import ReactDom from 'react-dom';
-import {say} from 'cowsay';
-import Faker from 'faker';
+import cowsay from 'cowsay-browser';
+import faker from 'faker';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: 'welcome to the cowsay, you... cowsay moo you say too, boo?',
+      content: cowsay.say({text: 'welcome to the cowsay, you... cowsay moo you say too, boo?'}),
+      cows: [],
+      current: '',
     };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // IF YOU WRITE YOUR OWN METHODS, YOU GOTTA BIND TO COMPONENT
-  handleClick() {
-    this.setState(() => ({content: Faker.random.words(7)}));
+  componentWillMount() {
+    cowsay.list((err, cows) => {
+      let current = cows[0];
+      this.setState({cows, current});
+    });
   }
 
-  // when you use the component, RENDER THIS as HTML
+  handleClick(e) {
+    let current = e.target.value || this.state.current;
+    let text = faker.random.words(7);
+    this.setState({current, content: cowsay.say({text, f: current})});
+  }
+
   render() {
     return (
       <div className="app">
         <h1>Generate Cowsay Lorem</h1>
+        <select onChange={this.handleClick}>
+          {this.state.cows.map((cow, i) => {
+            return <option value={cow} key={i}>{cow}</option>;
+          })}
+        </select>
         <button onClick={this.handleClick}>click me punc;</button>
-        <pre>{say({text: this.state.content})}</pre>
+        <pre>
+          <code>
+            {this.state.content}
+          </code>
+        </pre>
       </div>
     );
   }
